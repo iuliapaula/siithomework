@@ -12,7 +12,7 @@ public class CheckSquareArray {
         System.out.println(isSquare(matrix2));
     }
 
-    public static boolean isSquare(int[][] a) {
+    private static boolean isSquare(int[][] a) {
         boolean arrayIsSquare = true;
 
         for (int i = 0, arraySize = a.length; i < arraySize; i++) {

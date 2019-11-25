@@ -13,7 +13,7 @@ public class RemoveDuplicateElements {
         int numberOfUniqueElements = 0;
 
         for (int i = 0; i < arrayLength; i++) {
-            if (checkIfPreviouslyEncountered(i, array) == false) {
+            if (!checkIfPreviouslyEncountered(i, array)) {
                 uniqueElementsArray[numberOfUniqueElements] = array[i];
                 numberOfUniqueElements++;
             }
