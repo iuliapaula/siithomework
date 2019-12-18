@@ -1,4 +1,4 @@
-package intro_to_java;
+package oop_homework.refactor_intro_to_java;
 
 import java.util.Scanner;
 

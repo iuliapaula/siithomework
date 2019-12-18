@@ -1,4 +1,4 @@
-package intro_to_java;
+package oop_homework.refactor_intro_to_java;
 
 public class RemoveDuplicateElements {
     public static void main(String[] args) {

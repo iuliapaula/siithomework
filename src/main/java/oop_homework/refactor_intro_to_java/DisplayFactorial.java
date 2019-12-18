@@ -1,4 +1,4 @@
-package intro_to_java;
+package oop_homework.refactor_intro_to_java;
 
 import java.util.Scanner;
 
@@ -10,8 +10,6 @@ public class DisplayFactorial {
     }
 
     private static int computeFactorial(int number) {
-        int factorial;
-
         if(number == 0)
             return 1;
         else
