@@ -9,15 +9,11 @@ public class Book {
         this.page_numbers = page_numbers;
     }
 
-    public void setPage_numbers(int page_numbers) {
-        this.page_numbers = page_numbers;
-    }
-
     public String getName() {
         return name;
     }
 
-    public int getPage_numbers() {
+    public int getPageNumbers() {
         return page_numbers;
     }
 }

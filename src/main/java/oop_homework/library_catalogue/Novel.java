@@ -12,7 +12,7 @@ public class Novel extends Book {
     public String toString() {
         return "Book{" +
                 "name='" + super.getName() + '\'' +
-                ", number of pages: " + super.getPage_numbers() +
+                ", number of pages: " + super.getPageNumbers() +
                 ", type: " + type +
                 '}';
     }

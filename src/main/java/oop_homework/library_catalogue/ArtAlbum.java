@@ -12,7 +12,7 @@ public class ArtAlbum extends Book {
     public String toString() {
         return "Book{" +
                 "name='" + super.getName() + '\'' +
-                ", number of pages: " + super.getPage_numbers() +
+                ", number of pages: " + super.getPageNumbers() +
                 ", paper quality: " + paperQuality +
                 '}';
     }

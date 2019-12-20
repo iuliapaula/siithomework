@@ -27,7 +27,7 @@ public class LibraryCatalog implements Library {
                 i++;
             } else if (bookList[i].getName().equals(bookName)) {
                 bookList[i] = null;
-                break;
+                return true;
             } else {
                 i++;
             }
