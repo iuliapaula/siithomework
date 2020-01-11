@@ -21,5 +21,7 @@ public class PhoneApplicationTesting {
         phone.viewRemainingBatteryLife();
         phone.call("342");
         phone.call("45646");
+        ((PhoneByBrand)phone).setColor("Red");
+        ((PhoneByBrand)phone).setMaterial("Plastic");
     }
 }
