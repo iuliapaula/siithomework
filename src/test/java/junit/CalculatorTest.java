@@ -12,6 +12,8 @@ public class CalculatorTest {
 
 @Test
 public void testOneInput() {
+    // atunci cand modifici parti din cod trebuie sa rulezi si testele sa vezi ca inca ruleaza cu succes
+    // in cazul de fata nu mai compileaza
     Calculator calculator = new Calculator("3 m");
     int result = calculator.calculateExpression();
     assertEquals(3000, result);
