@@ -15,13 +15,11 @@ public class FibonacciStreams {
     }
 
     private static BigInteger[] fibonacciSeriesGenerator() {
-        BigInteger[] arrayInteger = new BigInteger[0];
         return Stream.iterate(new BigInteger[]{BigInteger.ZERO, BigInteger.ONE},
-                                t -> new BigInteger[]{t[1], t[0].add(t[1])})
+                t -> new BigInteger[]{t[1], t[0].add(t[1])})
                 .limit(100)
                 .map(t -> t[0])
-                .collect(Collectors.toList())
-                .toArray(arrayInteger);
+                .toArray(BigInteger[]::new);
     }
 }
 
