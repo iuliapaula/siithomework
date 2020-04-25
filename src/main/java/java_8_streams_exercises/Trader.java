@@ -1,6 +1,8 @@
 package java_8_streams_exercises;
 
+import lombok.Builder;
 
+@Builder
 public class Trader {
     private final String city;
     private final String name;
