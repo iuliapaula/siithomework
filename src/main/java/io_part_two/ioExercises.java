@@ -1,18 +1,14 @@
 package io_part_two;
 
-import java.io.Console;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ioExercises {
@@ -38,8 +34,24 @@ public class ioExercises {
 //        System.out.println(readInputFromConsole());
 //        System.out.println("9=====");
 //        getFileSize(System.getProperty("user.dir") + "\\src\\main\\java\\oop2_homework\\Contact.java");
-        System.out.println("10=====");
-        System.out.println(Arrays.toString(readContentsToByteArray(System.getProperty("user.dir") + "\\src\\main\\resources\\test.txt")));
+//        System.out.println("10=====");
+//        System.out.println(Arrays.toString(readContentsToByteArray(System.getProperty("user.dir") + "\\src\\main\\resources\\test.txt")));
+//        System.out.println("11=====");
+//        readContentsLineByLine(System.getProperty("user.dir") + "\\src\\main\\resources\\test.txt").forEach(System.out::println);
+//        System.out.println("12=====");
+//        readTextFile(System.getProperty("user.dir") + "\\src\\main\\resources\\test.txt");
+//        System.out.println("13=====");
+//        System.out.println(readLineByLineAndStoreInVariable(System.getProperty("user.dir") + "\\src\\main\\resources\\test.txt"));
+//        System.out.println("14=====");
+//        System.out.println(Arrays.toString(readLineByLineInArray(System.getProperty("user.dir") + "\\src\\main\\resources\\test.txt")));
+        System.out.println("15=====");
+        writeAndReadAFile(System.getProperty("user.dir") + "\\src\\main\\resources\\test_15.txt", "Line 1\nLine 2\nLine_long 3\nEnd");
+//        System.out.println("16=====");
+//        appendText(System.getProperty("user.dir") + "\\src\\main\\resources\\test_15.txt", "Appended text");
+//        System.out.println("17=====");
+//        readFirstThreeLinesFromFile(System.getProperty("user.dir") + "\\src\\main\\resources\\test_15.txt");
+        System.out.println("18=====");
+        System.out.println(findLongestWordFromFile(System.getProperty("user.dir") + "\\src\\main\\resources\\test_15.txt"));
     }
 
     //1. Implement a method to get a list of all file/directory names from the given.
@@ -130,21 +142,120 @@ public class ioExercises {
         System.out.println("Size of file " + Paths.get(pathName).getFileName() + " " + sizeInBytes + " bytes, " + sizeInKb + " kb " + sizeInMb + " mb.");
     }
 
-//10. Implement a method to read contents from a file into byte array.
+    //10. Implement a method to read contents from a file into byte array.
     public static byte[] readContentsToByteArray(String path) throws IOException {
         return Files.readAllBytes(Paths.get(path));
     }
-//11. Implement a method to read a file content line by line.
-    public static List<String> readContentsLineByLine(String path) {
-        File file = new File(path);
-        return new ArrayList<>();
-    }
-//12. Implement a method to read a plain text file.
-//13. Implement a method to read a file line by line and store it into a variable.
-//14. Implement a method to store text file content line by line into an array.
-//15. Implement a method to write and read a plain text file.
-//16. Implement a method to append text to an existing file.
-//17. Implement a method to read first 3 lines from a file.
-//18. Implement a method to find the longest word in a text file.
 
+    //11. Implement a method to read a file content line by line.
+    public static List<String> readContentsLineByLine(String path) throws FileNotFoundException {
+        File file = new File(path);
+        Scanner scanner = new Scanner(file);
+        List<String> readContent = new ArrayList<>();
+        while (scanner.hasNextLine()) {
+            readContent.add(scanner.nextLine());
+        }
+        return readContent;
+    }
+
+    //12. Implement a method to read a plain text file.
+    public static void readTextFile(String path) throws FileNotFoundException {
+        File file = new File(path);
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            System.out.println(scanner.nextLine());
+        }
+    }
+
+    //13. Implement a method to read a file line by line and store it into a variable.
+    public static String readLineByLineAndStoreInVariable(String path) throws FileNotFoundException {
+        StringBuilder readLines = new StringBuilder();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                readLines.append(line);
+                readLines.append('\n');
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return readLines.toString();
+
+    }
+
+    //14. Implement a method to store text file content line by line into an array.
+    public static String[] readLineByLineInArray(String path) {
+        List<String> readLines = new ArrayList<>();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                readLines.add(line);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return readLines.toArray(String[]::new);
+    }
+
+    //15. Implement a method to write and read a plain text file.
+    public static void writeAndReadAFile(String path, String textToWrite) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
+            bufferedWriter.write(textToWrite);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //16. Implement a method to append text to an existing file.
+    public static void appendText(String path, String textToAppend) {
+        Path path_file = Paths.get(path);
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path_file, StandardOpenOption.APPEND)) {
+            bufferedWriter.write(textToAppend);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //17. Implement a method to read first 3 lines from a file.
+    public static void readFirstThreeLinesFromFile(String path) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
+            int i = 0;
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null && i < 3) {
+                System.out.println(line);
+                i++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+//18. Implement a method to find the longest word in a text file.
+    public static String findLongestWordFromFile(String path) {
+        String longestWord = null;
+        try {
+            longestWord = Files.lines(Paths.get(path))
+                    .map(line -> line.split(" "))
+                    .flatMap(x -> Arrays.stream(x))
+                    .sorted((word1, word2) -> Integer.compare(word2.length(), word1.length()))
+                    .findFirst()
+                    .get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return longestWord;
+    }
 }
