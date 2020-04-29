@@ -28,7 +28,7 @@ public class DAOImpl {
         return 0;
     }
 
-    public int insertAccomodationFair(RoomFair roomFair) {
+    public int insertRoomFair(RoomFair roomFair) {
         try (Connection connection = getConnection()) {
             String sqlString = "INSERT INTO room_fair (id, value, season) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlString);
@@ -42,16 +42,18 @@ public class DAOImpl {
         return 0;
     }
 
-    public void insertRoomFair(AccomodationFair accomodationFair) {
+    public int insertAccomodationFair(AccomodationFair accomodationFair) {
         try (Connection connection = getConnection()) {
             String sqlString = "INSERT INTO accomodation_fair_relation (id, id_accomodation, id_room_fair) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlString);
             preparedStatement.setInt(1, accomodationFair.getId());
             preparedStatement.setInt(2, accomodationFair.getIdAccomodation());
             preparedStatement.setInt(3, accomodationFair.getIdRoomFair());
+            return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return 0;
     }
 
     public List<AccomodationPrices> getPricesPerEachRoom() {
