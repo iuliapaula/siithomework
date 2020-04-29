@@ -6,12 +6,6 @@ import java.util.List;
 
 public class DAOImpl {
 
-    public static void main(String[] args) {
-        DAOImpl dao = new DAOImpl();
-        Accomodation accomodationSingle = new Accomodation(1, "single", "queen", 1, "single room");
-        Accomodation accomodationDouble = new Accomodation(2, "double", "double", 2, "double room");
-        System.out.println(dao.insertAccomodation(accomodationSingle));
-    }
     public int insertAccomodation(Accomodation accomodation) {
         try (Connection connection = getConnection()) {
             String sqlString = "INSERT INTO accomodation (id, type, bed_type, max_guests, description) VALUES (?, ?, ?, ?, ?)";
@@ -59,11 +53,11 @@ public class DAOImpl {
     public List<AccomodationPrices> getPricesPerEachRoom() {
         List<AccomodationPrices> accomodationPrices= new ArrayList<>();
         try (Connection connection = getConnection()) {
-            String sqlString = "SELECT accomodation_fair_relation.id, accomodation_fair_relation.id_accomodation, accomodation_fair_relation.id_room_fair," +
-                    "accomodation.type, accomodation.bed_type, room_fair.value, room_fair.season" +
-                    "FROM accomodation_fair_relation" +
-                    "INNER JOIN accomodation ON accomodation_fair_relation.id_accomodation = accomodation.id" +
-                    "INNER JOIN room_fair ON accomadation_fair_relation.id_room_fair = room_fair.id";
+            String sqlString = "SELECT accomodation_fair_relation.id, accomodation_fair_relation.id_accomodation, accomodation_fair_relation.id_room_fair,\n" +
+                    "                    accomodation.type, accomodation.bed_type, room_fair.value, room_fair.season\n" +
+                    "                    FROM accomodation_fair_relation\n" +
+                    "                    INNER JOIN accomodation ON accomodation_fair_relation.id_accomodation = accomodation.id\n" +
+                    "                    INNER JOIN room_fair ON accomodation_fair_relation.id_room_fair = room_fair.id";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlString);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -73,7 +67,7 @@ public class DAOImpl {
                 accomodationPrice.setIdRoomFair(rs.getInt("id_room_fair"));
                 accomodationPrice.setAccomodationType(rs.getString("type"));
                 accomodationPrice.setBedType(rs.getString("bed_type"));
-                accomodationPrice.setValue(rs.getDouble("room_fair_value"));
+                accomodationPrice.setValue(rs.getDouble("value"));
                 accomodationPrice.setSeason(rs.getString("season"));
                 accomodationPrices.add(accomodationPrice);
             }

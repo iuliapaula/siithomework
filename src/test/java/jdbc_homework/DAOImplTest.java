@@ -12,8 +12,8 @@ public class DAOImplTest {
     RoomFair singleSeason = new RoomFair(1, 100, "full season");
     AccomodationFair accomodationFair = new AccomodationFair(1, 1, 1);
 
-    Accomodation accomodationDouble = new Accomodation(2, "double", "double", 2, "double room");
-        RoomFair singleExtraSeason = new RoomFair(2, 80, "extra season");
+    RoomFair extraSeason = new RoomFair(2, 80, "extra season");
+    AccomodationFair singleExtraSeason = new AccomodationFair(2, 1, 2);
 
 
 
@@ -36,6 +36,8 @@ public class DAOImplTest {
 
     @Test
     public void getPricesPerEachRoom() {
+        daoImpl.insertRoomFair(extraSeason);
+        daoImpl.insertAccomodationFair(singleExtraSeason);
         List<AccomodationPrices> accomodationPrices = daoImpl.getPricesPerEachRoom();
         accomodationPrices.forEach(System.out::println);
     }
